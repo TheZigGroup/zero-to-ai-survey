@@ -18,6 +18,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BASE_URL } from "./config";
+import { QuizOptionCard } from "@/components/quiz-option-card";
+import { ReportAccessForm } from "@/components/report-access-form";
 
 const signupSchema = yup.object({
   fullName: yup.string().required("Full name is required"),
@@ -140,7 +142,7 @@ export default function Home() {
 
       <div className="relative z-10 w-full max-w-6xl px-4 flex flex-col items-center">
         {/* Title Section */}
-        <div className="text-center mb-12">
+        {/* <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-light tracking-[0.2em] mb-4">
             Zero to A I
           </h1>
@@ -148,10 +150,10 @@ export default function Home() {
           <p className="text-sm tracking-[0.3em] uppercase">
             Experience Matters
           </p>
-        </div>
+        </div> */}
 
         {/* Auth Card */}
-        <Card className="w-full max-w-md bg-white/80 backdrop-blur-sm border-0 shadow-2xl">
+        {/* <Card className="w-full max-w-md bg-white/80 backdrop-blur-sm border-0 shadow-2xl">
           <CardHeader>
             <CardTitle className="text-xl font-light tracking-wide text-center">
               Welcome
@@ -293,7 +295,39 @@ export default function Home() {
               </TabsContent>
             </Tabs>
           </CardContent>
-        </Card>
+        </Card> */}
+
+        <div className="min-h-screen  py-12 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h1 className="text-6xl font-light tracking-tight mb-6">
+                ZeroToAI
+              </h1>
+              <p className="text-xl text-gray-600">
+                Take this assessment to see how ready your organization is for
+                AI adoption
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+              <QuizOptionCard
+                title="Basic Quiz"
+                description="5 question quiz that gives you a readiness score and high-level recommendations"
+                imageSrc="/basic-quiz-avatar.png"
+                onClick={() => router.push("/quiz/basic")}
+              />
+              <QuizOptionCard
+                title="Enhanced Quiz"
+                description="15 question quiz that gives you a readiness score and detailed downloadable readiness report"
+                imageSrc="/enhanced-quiz-avatar.png"
+                onClick={() => router.push("/quiz/enhanced")}
+              />
+            </div>
+
+            <ReportAccessForm />
+          </div>
+        </div>
+        
       </div>
     </main>
   );
