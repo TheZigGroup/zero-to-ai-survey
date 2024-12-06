@@ -317,7 +317,7 @@ export default function Home() {
                 title="Basic Quiz"
                 description="5 question quiz that gives you a readiness score and high-level recommendations"
                 imageSrc="/basic-quiz-avatar.png"
-                onClick={() => router.push("/quiz/basic")}
+                onClick={() => router.push("/survey")}
               />
               <QuizOptionCard
                 title="Enhanced Quiz"

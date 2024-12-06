@@ -21,49 +21,55 @@ interface User {
 
 export default function Survey() {
   const searchParams = useSearchParams();
-  const uuid = searchParams.get("uuid");
+  // const uuid = searchParams.get("uuid");
   const [user, setUser] = useState<User | null>(null);
-  const [currentScreen, setCurrentScreen] = useState(-1);
+  const [currentScreen, setCurrentScreen] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showScore, setShowScore] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userId, setUserId] = useState<string>("");
 
+  // useEffect(() => {
+  //   if (!uuid) {
+  //     toast({
+  //       title: "Error",
+  //       description: "No UUID provided",
+  //       variant: "destructive",
+  //     });
+  //     setError("No UUID provided");
+  //     setLoading(false);
+  //     return;
+  //   }
+
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await fetch(`${BASE_URL}/users/${uuid}`);
+  //       if (!response.ok) {
+  //         toast({
+  //           title: "Error",
+  //           description: "Failed to fetch user data",
+  //           variant: "destructive",
+  //         });
+  //       }
+  //       const userData = await response.json();
+  //       setUser(userData);
+  //     } catch (err) {
+  //       setError((err as Error).message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchUser();
+  //   console.log({ showScore, userId, currentScreen, questions, answers });
+  // }, [uuid]);
+
   useEffect(() => {
-    if (!uuid) {
-      toast({
-        title: "Error",
-        description: "No UUID provided",
-        variant: "destructive",
-      });
-      setError("No UUID provided");
+    setTimeout(() => {
       setLoading(false);
-      return;
-    }
-
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/users/${uuid}`);
-        if (!response.ok) {
-          toast({
-            title: "Error",
-            description: "Failed to fetch user data",
-            variant: "destructive",
-          });
-        }
-        const userData = await response.json();
-        setUser(userData);
-      } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUser();
-    console.log({ showScore, userId, currentScreen, questions, answers });
-  }, [uuid]);
+    }, 600);
+  }, []);
 
   const handleAnswerSelect = async (value: string) => {
     const currentQuestion = questions[currentScreen];
@@ -88,32 +94,31 @@ export default function Survey() {
   };
 
   const submitSurvey = async () => {
-    if (!uuid) return;
-
-    try {
-      const score = calculateScore(answers);
-      await fetch(`${BASE_URL}/survey/submit`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uuid, answers, score }),
-      });
-      setShowScore(true);
-    } catch (error) {
-      console.error("Error submitting survey:", error);
-    }
+    // if (!uuid) return;
+    // try {
+    //   const score = calculateScore(answers);
+    //   await fetch(`${BASE_URL}/survey/submit`, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ uuid, answers, score }),
+    //   });
+    //   setShowScore(true);
+    // } catch (error) {
+    //   console.error("Error submitting survey:", error);
+    // }
   };
 
-  useKeyboardNavigation({
-    onNext: () => {
-      if (currentScreen === -1) {
-        setCurrentScreen(0);
-      } else if (answers[questions[currentScreen].id]) {
-        handleAnswerSelect(answers[questions[currentScreen].id]);
-      }
-    },
-    onPrevious: handlePrevious,
-    canProgress: currentScreen === -1 || !!answers[questions[currentScreen].id],
-  });
+  // useKeyboardNavigation({
+  //   onNext: () => {
+  //     if (currentScreen === -1) {
+  //       setCurrentScreen(0);
+  //     } else if (answers[questions[currentScreen].id]) {
+  //       handleAnswerSelect(answers[questions[currentScreen].id]);
+  //     }
+  //   },
+  //   onPrevious: handlePrevious,
+  //   canProgress: currentScreen === -1 || !!answers[questions[currentScreen].id],
+  // });
 
   if (loading) {
     return (
@@ -126,45 +131,36 @@ export default function Survey() {
     );
   }
 
-  if (error || !user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-red-500">{error || "User not found"}</p>
-      </div>
-    );
-  }
+  // if (error || !user) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <p className="text-red-500">{error || "User not found"}</p>
+  //     </div>
+  //   );
+  // }
 
-  if (uuid) {
-    return (
-      <main className="min-h-screen bg-white">
-        <AnimatePresence mode="wait">
-          {showScore ? (
-            <ScoreScreen
-              answers={answers}
-              score={calculateScore(answers)}
-              totalPossibleScore={questions.length * 3}
-              uuid={userId}
-            />
-          ) : currentScreen === -1 ? (
-            <WelcomeScreen
-              key="welcome"
-              user={user}
-              onStart={() => setCurrentScreen(0)}
-            />
-          ) : (
-            <QuestionScreen
-              key={`question-${currentScreen}`}
-              question={questions[currentScreen]}
-              totalQuestions={questions.length}
-              currentQuestion={currentScreen + 1}
-              selectedValue={answers[questions[currentScreen].id]}
-              onSelect={handleAnswerSelect}
-              onPrevious={handlePrevious}
-            />
-          )}
-        </AnimatePresence>
-      </main>
-    );
-  }
-  return <div> No survey found</div>; 
+  return (
+    <main className="min-h-screen bg-white">
+      <AnimatePresence mode="wait">
+        {showScore ? (
+          <ScoreScreen
+            answers={answers}
+            score={calculateScore(answers)}
+            totalPossibleScore={questions.length * 3}
+            uuid={userId}
+          />
+        ) : (
+          <QuestionScreen
+            key={`question-${currentScreen}`}
+            question={questions[currentScreen]}
+            totalQuestions={questions.length}
+            currentQuestion={currentScreen + 1}
+            selectedValue={answers[questions[currentScreen].id]}
+            onSelect={handleAnswerSelect}
+            onPrevious={handlePrevious}
+          />
+        )}
+      </AnimatePresence>
+    </main>
+  );
 }

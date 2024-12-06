@@ -1,6 +1,8 @@
 export interface Question {
   id: number;
   text: string;
+  type: string;
+  placeholder?: string;
   options: {
     value: string;
     label: string;
@@ -10,8 +12,45 @@ export interface Question {
 
 export const questions: Question[] = [
   {
+    id: -3,
+    text: "What is your full name?",
+    type:'input',
+    placeholder:'Enter your full name',
+    options: [
+      
+    ],
+  },
+  {
+    id: -2,
+    text: "Enter your email address",
+    type:'input',
+    placeholder:'Enter your email address',
+    options: [
+      
+    ],
+  },
+  {
+    id: -1,
+    text: "What is your company name",
+    type:'input',
+    placeholder:'Enter your company name',
+    options: [
+      
+    ],
+  },
+  {
+    id: 0,
+    text: "Enter your row",
+    placeholder:'Enter your row',
+    type:'input',
+    options: [
+      
+    ],
+  },
+  {
     id: 1,
     text: "Current Data Infrastructure",
+    type:'selection',
     options: [
       { value: "on-premises", label: "On-Premises: All data is stored and managed on local servers", points: 1 },
       { value: "cloud-based", label: "Cloud-Based: Data infrastructure is entirely in the cloud", points: 3 },
@@ -21,6 +60,7 @@ export const questions: Question[] = [
   {
     id: 2,
     text: "Data Governance Framework",
+    type:'selection',
     options: [
       { value: "mature", label: "Mature: Have a well-defined data governance strategy in place", points: 3 },
       { value: "developing", label: "Developing: Working towards a comprehensive data governance framework", points: 2 },
@@ -30,6 +70,7 @@ export const questions: Question[] = [
   {
     id: 3,
     text: "Experience with Cloud-Based Platforms",
+    type:'selection',
     options: [
       { value: "experienced", label: "Experienced: Team is proficient with cloud platforms", points: 3 },
       { value: "some-experience", label: "Some Experience: Limited experience with cloud technologies", points: 2 },
@@ -39,6 +80,7 @@ export const questions: Question[] = [
   {
     id: 4,
     text: "Need for Real-Time Analytics",
+    type:'selection',
     options: [
       { value: "critical", label: "Critical: Real-time analytics are essential for operations", points: 3 },
       { value: "important", label: "Important: Beneficial but not critical", points: 2 },
@@ -48,6 +90,7 @@ export const questions: Question[] = [
   {
     id: 5,
     text: "Organizational Culture Towards Technological Change",
+    type:'selection',
     options: [
       { value: "proactive", label: "Proactive: Embraces new technologies and encourages innovation", points: 3 },
       { value: "adaptive", label: "Adaptive: Open to change but requires time to adjust", points: 2 },

@@ -11,6 +11,8 @@ interface Option {
 interface Question {
   id: number;
   text: string;
+  type: string;
+  placeholder?: string;
   options: Option[];
 }
 
@@ -69,31 +71,60 @@ export function QuestionScreen({
             transition={{ delay: 0.2 }}
             className="space-y-4"
           >
-            {question.options.map((option, index) => (
-              <motion.button
-                key={option.value}
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.1 * (index + 1) }}
-                onClick={() => onSelect(option.value)}
-                className={`w-full text-left p-4 rounded-lg transition-all ${
-                  selectedValue === option.value
-                    ? "bg-black text-white"
-                    : "bg-gray-50 hover:bg-gray-100"
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium">{option.label}</span>
-                  <span className={`text-sm font-medium ml-4 ${
-                    selectedValue === option.value
-                      ? "text-white"
-                      : "text-gray-500"
-                  }`}>
-                    {option.points} {option.points === 1 ? 'point' : 'points'}
-                  </span>
-                </div>
-              </motion.button>
-            ))}
+            {question.type === "input" ? (
+              <>
+                <motion.input
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.1 * 1 }}
+                  // onClick={() => onSelect("option.value")}
+                  className={`w-full text-left p-4 rounded-lg transition-all border`}
+                />
+
+                <motion.button
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.1 * 1 }}
+                  onClick={() => onSelect("option.value")}
+                  className={` bg-emerald-500 hover:bg-emerald-600 text-white px-4 mt-1 mr-1 text-left p-2 rounded-lg transition-all border`}
+                >
+                  Submit
+                </motion.button>
+              </>
+            ) : (
+              <>
+                {question.options.map((option, index) => (
+                  <motion.button
+                    key={option.value}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.1 * (index + 1) }}
+                    onClick={() => onSelect(option.value)}
+                    className={`w-full text-left p-4 rounded-lg transition-all ${
+                      selectedValue === option.value
+                        ? "bg-black text-white"
+                        : "bg-gray-50 hover:bg-gray-100"
+                    }`}
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium">
+                        {option.label}
+                      </span>
+                      <span
+                        className={`text-sm font-medium ml-4 ${
+                          selectedValue === option.value
+                            ? "text-white"
+                            : "text-gray-500"
+                        }`}
+                      >
+                        {option.points}{" "}
+                        {option.points === 1 ? "point" : "points"}
+                      </span>
+                    </div>
+                  </motion.button>
+                ))}
+              </>
+            )}
           </motion.div>
         </div>
       </div>
