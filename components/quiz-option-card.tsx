@@ -30,7 +30,7 @@ export function QuizOptionCard({
 
       {/* Content */}
       <div className="relative z-10">
-        <div className="relative w-48 h-48 mb-6 transition-transform duration-300 group-hover:scale-105">
+        <div className="relative m-auto w-48 h-48 mb-6 transition-transform duration-300 group-hover:scale-105">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20 rounded-lg" />
           <Image
             src={imageSrc}

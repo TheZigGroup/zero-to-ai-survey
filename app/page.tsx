@@ -300,10 +300,13 @@ export default function Home() {
         <div className="min-h-screen  py-12 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h1 className="text-6xl font-light tracking-tight mb-6">
+              <h1 className="text-4xl md:text-6xl font-light tracking-[0.2em] mb-4">
                 ZeroToAI
               </h1>
-              <p className="text-xl text-gray-600">
+              <p className="text-sm tracking-[0.3em] uppercase">
+                Experience Matters
+              </p>
+              <p className="text-xl text-gray-600 mt-2">
                 Take this assessment to see how ready your organization is for
                 AI adoption
               </p>
@@ -327,7 +330,6 @@ export default function Home() {
             <ReportAccessForm />
           </div>
         </div>
-        
       </div>
     </main>
   );
